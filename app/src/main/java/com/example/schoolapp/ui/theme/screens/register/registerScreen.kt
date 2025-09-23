@@ -89,6 +89,7 @@ fun registerScreen(navController: NavController){
             visualTransformation = PasswordVisualTransformation()
             )
         Spacer(modifier = Modifier.height(12.dp))
+
         OutlinedTextField(value = confirmPassword,
             onValueChange = {confirmPassword = it},
             leadingIcon = {Icon(Icons.Default.Lock, contentDescription = null)},
