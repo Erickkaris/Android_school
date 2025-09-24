@@ -12,9 +12,7 @@ import com.example.schoolapp.ui.theme.screens.register.registerScreen
 @Composable
 fun AppNavHost(navController: NavHostController = rememberNavController(), startDestination: String = ROUTE_REGISTER){
     NavHost(navController = navController, startDestination = startDestination){
-        composable (ROUTE_REGISTER){ registerScreen(navController)
-        }
-        composable (ROUTE_LOGIN){ loginScreen(navController)
-        }
+        composable (ROUTE_REGISTER){ registerScreen(navController) }
+        composable (ROUTE_LOGIN){ loginScreen(navController) }
     }
 }
