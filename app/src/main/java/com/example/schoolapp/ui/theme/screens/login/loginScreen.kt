@@ -60,20 +60,12 @@ fun loginScreen(navController: NavController){
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        OutlinedTextField(value = username,
-            onValueChange = {username = it},
-            leadingIcon = { Icon(Icons.Default.Person,
-                contentDescription = null) },
-            label = { Text("Username") },
-            placeholder = { Text("Please enter your username") })
-
-        Spacer(modifier = Modifier.height(24.dp))
 
         OutlinedTextField(value = email,
             onValueChange = {email = it},
             leadingIcon = { Icon(Icons.Default.Email,
                 contentDescription = null) },
-            label = { Text("Email") },
+            label = { Text("Enter Email") },
             placeholder = { Text("Please enter your email") })
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -82,21 +74,12 @@ fun loginScreen(navController: NavController){
             onValueChange = {password = it},
             leadingIcon = { Icon(Icons.Default.Lock,
                 contentDescription = null) },
-            label = { Text("Password") },
+            label = { Text("Enter Password") },
             placeholder = { Text("Please enter your password") },
             visualTransformation = PasswordVisualTransformation())
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        OutlinedTextField(value = confirmPassword,
-            onValueChange = {confirmPassword = it},
-            leadingIcon = { Icon(Icons.Default.Lock,
-                contentDescription = null) },
-            label = { Text("Confirm password") },
-            placeholder = { Text("Please enter your password") },
-            visualTransformation = PasswordVisualTransformation())
-
-        Spacer(modifier = Modifier.height(24.dp))
 
         Button(onClick = {}, modifier = Modifier.fillMaxWidth()
             .height(50.dp) ) {
@@ -119,6 +102,6 @@ fun loginScreen(navController: NavController){
 @Preview(showBackground = true,
     showSystemUi = true)
 @Composable
-fun LoginScreenPreviem(){
+fun LoginScreenPreview(){
     loginScreen(navController = rememberNavController())
 }
