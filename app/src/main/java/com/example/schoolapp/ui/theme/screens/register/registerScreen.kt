@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.schoolapp.R
+import com.example.schoolapp.navigation.ROUTE_DASHBOARD
 import com.example.schoolapp.navigation.ROUTE_LOGIN
 
 @Composable
@@ -109,7 +110,7 @@ fun registerScreen(navController: NavController){
 
         Text(text = "Already regestered?")
         Text("Login here",
-            modifier = Modifier.clickable{navController.navigate(ROUTE_LOGIN)},
+            modifier = Modifier.clickable{navController.navigate(ROUTE_DASHBOARD)},
             color = Color.Blue,
             fontWeight = FontWeight.Bold)
     }
