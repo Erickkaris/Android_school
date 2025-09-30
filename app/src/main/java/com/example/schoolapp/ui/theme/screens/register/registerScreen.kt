@@ -28,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -35,11 +36,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.schoolapp.R
 import com.example.schoolapp.navigation.ROUTE_DASHBOARD
 import com.example.schoolapp.navigation.ROUTE_LOGIN
+import com.example.schoolapp.viewmodels.AuthViewModel
 
 @Composable
 fun registerScreen(navController: NavController){
@@ -48,6 +51,12 @@ fun registerScreen(navController: NavController){
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
+
+    //This variable connects our view model which contains the register logic
+    // to this register screen.
+    val authViewModel: AuthViewModel = viewModel()
+
+    val context = LocalContext.current
 
     Column (  modifier = Modifier.fillMaxSize()
         .padding(horizontal = 24.dp, vertical = 24.dp),
@@ -100,7 +109,14 @@ fun registerScreen(navController: NavController){
             )
         Spacer(modifier = Modifier.height(24.dp))
 
-        Button(onClick = {},
+        Button(onClick =
+            { authViewModel.signup(username = username,
+            email = email,
+            password = password,
+            confirmPassword = confirmPassword,
+            navController = navController,
+            context = context)},
+
             modifier = Modifier.fillMaxWidth()
                 .height(50.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
