@@ -28,24 +28,29 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.schoolapp.R
 import com.example.schoolapp.navigation.ROUTE_REGISTER
+import com.example.schoolapp.viewmodels.AuthViewModel
 
 @Composable
 fun loginScreen(navController: NavController){
 
-    var username by remember  { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var confirmPassword by remember { mutableStateOf("") }
+
+    val authViewModel: AuthViewModel = viewModel()
+    val context = LocalContext.current
 
     Column (modifier = Modifier.fillMaxSize().padding(32.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -81,7 +86,12 @@ fun loginScreen(navController: NavController){
         Spacer(modifier = Modifier.height(24.dp))
 
 
-        Button(onClick = {}, modifier = Modifier.fillMaxWidth()
+        Button(onClick = {
+            authViewModel.login(email = email,
+                password = password,
+                navController = navController,
+                context = context)
+        }, modifier = Modifier.fillMaxWidth()
             .height(50.dp) ) {
             Text("LOGIN", fontSize = 20.sp)
         }

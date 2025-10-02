@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
@@ -19,7 +20,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -47,6 +47,7 @@ import com.example.schoolapp.viewmodels.AuthViewModel
 @Composable
 fun registerScreen(navController: NavController){
 
+    var fullName by remember { mutableStateOf("") }
     var username by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -75,6 +76,14 @@ fun registerScreen(navController: NavController){
             contentDescription = "App logo",
             modifier = Modifier.size(140.dp)
         )
+
+        OutlinedTextField(value = fullName,
+            onValueChange = {fullName = it},
+            leadingIcon = {Icon(Icons.Default.Face, contentDescription = null)},
+            label = { Text(text = "Full name")},
+            placeholder = {Text("Please enter Full name")})
+        Spacer(modifier = Modifier.height(12.dp))
+
 
         OutlinedTextField(value = username,
             onValueChange = {username = it},
@@ -111,6 +120,7 @@ fun registerScreen(navController: NavController){
 
         Button(onClick =
             { authViewModel.signup(username = username,
+                fullName = fullName,
             email = email,
             password = password,
             confirmPassword = confirmPassword,
@@ -124,9 +134,9 @@ fun registerScreen(navController: NavController){
             color = Color.White,
             fontSize = 20.sp)}
 
-        Text(text = "Already regestered?")
+        Text(text = "Already registered?")
         Text("Login here",
-            modifier = Modifier.clickable{navController.navigate(ROUTE_DASHBOARD)},
+            modifier = Modifier.clickable{navController.navigate(ROUTE_LOGIN)},
             color = Color.Blue,
             fontWeight = FontWeight.Bold)
     }
