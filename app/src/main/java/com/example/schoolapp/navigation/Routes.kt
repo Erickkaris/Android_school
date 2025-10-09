@@ -7,3 +7,5 @@ const val ROUTE_LOGIN = "login"
 const val ROUTE_DASHBOARD = "dashboard"
 
 const val ROUTE_ADDEMPLOYEE = "addEmployee"
+
+const val ROUTE_VIEWEMPLOYEE = "viewEmployee"
