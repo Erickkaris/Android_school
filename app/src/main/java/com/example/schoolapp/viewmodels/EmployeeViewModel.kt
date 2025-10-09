@@ -3,9 +3,12 @@ package com.example.schoolapp.viewmodels
 import android.content.Context
 import android.net.Uri
 import android.widget.Toast
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.example.schoolapp.models.EmployeeModel
 import com.example.schoolapp.navigation.ROUTE_DASHBOARD
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.Dispatchers
@@ -79,7 +82,23 @@ class EmployeeViewModel : ViewModel() {
         return secureUrl ?: throw Exception("Failed to get image")
     }
 
-    fun fetchEmployee(){
+
+    private val _employees = mutableStateListOf<EmployeeModel>()
+    val employees:List<EmployeeModel> = _employees
+    fun fetchEmployee(context: Context) {
+        val ref = FirebaseDatabase.getInstance().getReference("Employees")
+        ref.get().addOnSuccessListener { snapshot ->
+            _employees.clear()
+            for (child in snapshot.children){
+                val employee = child.getValue(EmployeeModel::class.java)
+                employee?.let {
+                    it.id = child.key
+                    _employees.add(it)
+                }
+            }
+        }.addOnFailureListener {
+            Toast.makeText(context, "Failed to retrieve employees", Toast.LENGTH_LONG).show()
+        }
 
     }
     fun deleteEmployee(){
