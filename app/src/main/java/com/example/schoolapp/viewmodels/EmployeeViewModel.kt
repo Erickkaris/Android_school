@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.schoolapp.models.EmployeeModel
 import com.example.schoolapp.navigation.ROUTE_DASHBOARD
+import com.example.schoolapp.navigation.ROUTE_VIEWEMPLOYEE
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -35,7 +36,9 @@ class EmployeeViewModel : ViewModel() {
                        nationality:String,
                        summary: String,
                        context: Context,
-                       navController: NavController){
+                       navController: NavController,
+//                       navigate: Unit
+){
         viewModelScope.launch (Dispatchers.IO){
             try {
                 val imageUrl = imageUri?.let { uploadToCloudinary(context,it) }
@@ -55,7 +58,7 @@ class EmployeeViewModel : ViewModel() {
                 ref.setValue(employeeData).await()
                 withContext(Dispatchers.Main){
                     Toast.makeText(context, "Employee saved Successfully", Toast.LENGTH_LONG).show()
-                    navController.navigate(ROUTE_DASHBOARD)
+                    navController.navigate(ROUTE_VIEWEMPLOYEE)
                 }
             }catch (e: Exception){
                 withContext(Dispatchers.Main){

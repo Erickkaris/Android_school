@@ -62,6 +62,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.example.schoolapp.R
+import com.example.schoolapp.navigation.ROUTE_VIEWEMPLOYEE
 import com.example.schoolapp.viewmodels.EmployeeViewModel
 
 
@@ -304,8 +305,9 @@ fun addEmployeeScreen(navController: NavController) {
                         nationality,
                         summary,
                         context,
-                        navController
-                    )
+                        navController,
+                       // navController.navigate(ROUTE_VIEWEMPLOYEE)
+                              )
                     },
                     modifier = Modifier.width(140.dp),
                     shape = RoundedCornerShape(12.dp),
