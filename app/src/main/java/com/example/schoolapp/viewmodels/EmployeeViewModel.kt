@@ -4,13 +4,11 @@ import android.content.Context
 import android.net.Uri
 import android.widget.Toast
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.schoolapp.models.EmployeeModel
-import com.example.schoolapp.navigation.ROUTE_DASHBOARD
-import com.example.schoolapp.navigation.ROUTE_VIEWEMPLOYEE
+import com.example.schoolapp.navigation.ROUTE_VIEW_EMPLOYEE
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -58,7 +56,7 @@ class EmployeeViewModel : ViewModel() {
                 ref.setValue(employeeData).await()
                 withContext(Dispatchers.Main){
                     Toast.makeText(context, "Employee saved Successfully", Toast.LENGTH_LONG).show()
-                    navController.navigate(ROUTE_VIEWEMPLOYEE)
+                    navController.navigate(ROUTE_VIEW_EMPLOYEE)
                 }
             }catch (e: Exception){
                 withContext(Dispatchers.Main){
@@ -104,10 +102,49 @@ class EmployeeViewModel : ViewModel() {
         }
 
     }
-    fun deleteEmployee(){
+    fun deleteEmployee(employeeId: String, context: Context){
+        val ref = FirebaseDatabase.getInstance().getReference("Employees").child(employeeId)
+        ref.removeValue().addOnSuccessListener {
+            _employees.removeAll{it.id == employeeId}
+        }.addOnFailureListener {
+            Toast.makeText(context,"Employee not deleted", Toast.LENGTH_SHORT).show()
+        }
 
     }
-    fun updateEmployee(){
-
+    fun updateEmployee(
+        employeeId: String,
+        imageUri: Uri?,
+        name: String,
+        gender: String,
+        nationality: String,
+        age: String,
+        summary: String,
+        context: Context,
+        navController: NavController
+    ){
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val imageurl = imageUri?.let { uploadToCloudinary(context,it) }
+                val updateEmployee = mapOf(
+                    "id" to employeeId,
+                    "name" to name,
+                    "gender" to gender  ,
+                    "nationality" to nationality,
+                    "age" to age,
+                    "diagnosis" to summary,
+                    "imageUrl" to imageurl
+                )
+                val ref = FirebaseDatabase.getInstance().getReference("Employees").child(employeeId)
+                ref.updateChildren(updateEmployee).await()
+                fetchEmployee(context)
+                withContext(Dispatchers.Main){
+                    Toast.makeText(context,"Employee updated successfully", Toast.LENGTH_SHORT).show()
+                }
+            }catch (e: Exception){
+                withContext(Dispatchers.Main){
+                    Toast.makeText(context,"Update failed", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 }
