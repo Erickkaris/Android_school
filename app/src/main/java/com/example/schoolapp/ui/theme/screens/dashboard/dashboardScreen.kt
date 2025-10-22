@@ -43,7 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.schoolapp.navigation.ROUTE_ADDEMPLOYEE
+import com.example.schoolapp.navigation.ROUTE_ADD_EMPLOYEE
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -149,7 +149,7 @@ fun dashboardScreen(navController: NavController){
             Card (
                 modifier = Modifier.fillMaxWidth()
                     .padding( 8.dp)
-                    .clickable(onClick = {navController.navigate(ROUTE_ADDEMPLOYEE)}),
+                    .clickable(onClick = {navController.navigate(ROUTE_ADD_EMPLOYEE)}),
                 elevation = CardDefaults.cardElevation(6.dp),
                 shape = RoundedCornerShape(16.dp),
                 colors = CardDefaults.cardColors(containerColor = Color(0xFFE0F2F1))
