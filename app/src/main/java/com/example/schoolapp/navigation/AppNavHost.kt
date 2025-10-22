@@ -24,8 +24,10 @@ fun AppNavHost(navController: NavHostController = rememberNavController(), start
         composable (route = ROUTE_DASHBOARD){ dashboardScreen(navController) }
         composable (route = ROUTE_ADD_EMPLOYEE){ addEmployeeScreen(navController) }
         composable (route = ROUTE_VIEW_EMPLOYEE){ EmployeeListScreen(navController) }
-        composable (route = ROUTE_SPLASHSCREEN){ SplashScreen { navController.navigate(ROUTE_LOGIN)
+
+        composable (route = ROUTE_SPLASHSCREEN){ SplashScreen { navController.navigate(ROUTE_REGISTER)
         {popUpTo(ROUTE_SPLASHSCREEN) { inclusive=true } } } }
+
         composable(route = ROUTE_UPDATE_EMPLOYEE,
             arguments = listOf(
                 navArgument("employeeId")

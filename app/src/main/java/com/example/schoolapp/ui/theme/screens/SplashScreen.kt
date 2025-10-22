@@ -28,7 +28,7 @@ fun SplashScreen(onNavigateToNext: () -> Unit){
 
     LaunchedEffect(Unit) {
         kotlinx.coroutines.delay(splashScreenDuration)
-        onNavigateToNext
+        onNavigateToNext()
     }
 
     Box (modifier = Modifier.fillMaxSize().background(Color.Black),
